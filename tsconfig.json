@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outFile": "dist/webgl-demo.js",
     "sourceMap": true,
     "noImplicitAny": true,
     "strictNullChecks": true
