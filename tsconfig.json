@@ -2,7 +2,8 @@
   "compilerOptions": {
     "sourceMap": true,
     "noImplicitAny": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "module": "ESNext"
   },
   "include": ["./tutorials/**/*"]
 }
