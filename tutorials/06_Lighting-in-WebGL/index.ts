@@ -33,7 +33,7 @@ export const vsSource = `
   uniform mat4 uProjectionMatrix;
 
   varying highp vec2 vTextureCoord;
-  varying highp vec3 vLighting;
+  varying highp float vLighting;
 
   void main() {
     gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
@@ -42,14 +42,20 @@ export const vsSource = `
 
     // Apply lighting effect
 
+    // 이게 rgb 값.. 색을 더해서 어두워 보이게끔.
     highp vec3 ambientLight = vec3(0.3, 0.3, 0.3);
     highp vec3 directionalLightColor = vec3(1, 1, 1);
+    // 이게 조명 위치인 듯?
     highp vec3 directionalVector = normalize(vec3(0.85, 0.8, 0.75));
+
+    highp float fAmbientLight = 0.3;
+    highp float fDirectionalLightColor = 1.0;
 
     highp vec4 transformedNormal = uNormalMatrix * vec4(aVertexNormal, 1.0);
 
     highp float directional = max(dot(transformedNormal.xyz, directionalVector), 0.0);
-    vLighting = ambientLight + (directionalLightColor * directional);
+    // vLighting = ambientLight + (directionalLightColor * directional);
+    vLighting = fAmbientLight + (fDirectionalLightColor * directional);
   }
 `;
 
@@ -57,14 +63,15 @@ export const vsSource = `
 //  texel(텍스쳐의 각 픽셀)이 어디에 그려져야 할지 계산해주는 친구
 export const fsSource = `
   varying highp vec2 vTextureCoord;
-  varying highp vec3 vLighting;
+  varying highp float vLighting;
 
   uniform sampler2D uSampler;
 
   void main() {
     highp vec4 texelColor = texture2D(uSampler, vTextureCoord);
 
-    gl_FragColor = vec4(texelColor.rgb * vLighting, texelColor.a);
+    // gl_FragColor = vec4(texelColor.rgb * vLighting, texelColor.a);
+    gl_FragColor = vec4(texelColor.rgb, texelColor.a * vLighting);
   }
 `;
 

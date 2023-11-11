@@ -21,6 +21,9 @@ export function drawScene(
   gl.enable(gl.DEPTH_TEST); // 깊이 테스트 활성화?
   gl.depthFunc(gl.LEQUAL); // 가까이 있는게 멀리 있는걸 가리는 옵션.. 오호
 
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_COLOR, gl.DST_COLOR);
+
   // 색상 정보와 깊이 정보를 클리어
   // 비트 연산자!
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
