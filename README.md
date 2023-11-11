@@ -2,6 +2,11 @@
 
 ..그런데 타입스크립트를 얹은..!! 3D 렌더링 해볼거야!
 
+그러나..모델링과 텍스쳐 데이터를 읽고 렌더링하는 부분이 비중이 큽니다. \
+gltf 로더만을 이용해 렌더링 하기에는 부가적인 데이터도 있고, vertex/fragment shader 를 직접 작성하는건 허들이 될 것 같군용. \
+WebGL 쪽은 라이브러리를 적극적으로 쓰는 방향으로 작업하는걸로. 다만 라이브러리를 사용하는 부분은 인터페이스를 확실하게 \
+찢어놓고, 추후 WebGL 쪽을 직접 작성할 수 있는 여지를 남겨두는 방향으로 해보는걸로!
+
 ## Ref
 
 - [MDN - WebGL tutorial](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial)
