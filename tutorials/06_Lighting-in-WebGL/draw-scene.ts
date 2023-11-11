@@ -3,6 +3,7 @@ import { programInfo } from './index.js';
 
 type ProgramInfo = typeof programInfo;
 type Buffers = {
+  normal: WebGLBuffer;
   position: WebGLBuffer;
   textureCoord: WebGLBuffer;
   indices: WebGLBuffer;
@@ -47,8 +48,13 @@ export function drawScene(
   mat4.rotate(modelViewMatrix, modelViewMatrix, cubeRotation * 0.7, [0, 1, 0]);
   mat4.rotate(modelViewMatrix, modelViewMatrix, cubeRotation * 0.3, [1, 0, 0]);
 
+  const normalMatrix = mat4.create();
+  mat4.invert(normalMatrix, modelViewMatrix);
+  mat4.transpose(normalMatrix, normalMatrix);
+
   setPositionAttribute(gl, buffers, programInfo);
   setTextureAttribute(gl, buffers, programInfo);
+  setNormalAttribute(gl, buffers, programInfo);
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);
 
   // WebGL이여, 그릴때 이 프로그램을 써라!
@@ -65,6 +71,12 @@ export function drawScene(
     programInfo.uniformLocations.modelViewMatrix,
     false,
     modelViewMatrix
+  );
+
+  gl.uniformMatrix4fv(
+    programInfo.uniformLocations.normalMatrix,
+    false,
+    normalMatrix
   );
 
   gl.activeTexture(gl.TEXTURE0);
@@ -125,4 +137,26 @@ function setTextureAttribute(
     offset
   );
   gl.enableVertexAttribArray(programInfo.attribLocations.textureCoord);
+}
+
+function setNormalAttribute(
+  gl: WebGLRenderingContext,
+  buffers: Buffers,
+  programInfo: ProgramInfo
+) {
+  const numComponents = 3;
+  const type = gl.FLOAT;
+  const normalize = false;
+  const stride = 0;
+  const offset = 0;
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffers.normal);
+  gl.vertexAttribPointer(
+    programInfo.attribLocations.vertexNormal,
+    numComponents,
+    type,
+    normalize,
+    stride,
+    offset
+  );
+  gl.enableVertexAttribArray(programInfo.attribLocations.vertexNormal);
 }
