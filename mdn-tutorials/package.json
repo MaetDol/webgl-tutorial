@@ -1,13 +1,15 @@
 {
-  "name": "webgl-tutorial",
+  "name": "mdn-tutorials",
   "version": "1.0.0",
   "description": "해당 레포지토리는 WebGL 을 공부하기 위해 MDN의 `WebGL tutorial` 아티클을 참고하며 작성한 코드들을 담았습니다.",
   "main": "index.js",
-  "scripts": {},
+  "devDependencies": {
+    "@types/gl-matrix": "^3.2.0",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "watch": "tsc --watch --watchFile useFsEventsOnParentDirectory"
+  },
   "author": "",
-  "license": "ISC",
-  "workspaces": [
-    "babylon-js",
-    "mdn-tutorials"
-  ]
+  "license": "ISC"
 }
